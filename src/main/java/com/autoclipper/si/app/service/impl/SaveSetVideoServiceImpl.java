@@ -10,11 +10,9 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class SaveSetVideoServiceImpl implements ISaveSetVideoService {
 
-    @Inject
-    private ISaveSetVideoUseCase saveSetVideoUseCase;
 
     @Override
     public ESetVideoResponse saveSetVideo(ESetVideoRequest eSetVideoRequest) {
-        return saveSetVideoUseCase.save(eSetVideoRequest);
+        return null;
     }
 }

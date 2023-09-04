@@ -1,5 +1,6 @@
 package com.autoclipper.si.domain.usecase.interfaces;
 
+import com.autoclipper.si.app.dto.client.TsuruRequestDTO;
 import com.autoclipper.si.domain.entities.setvideoentities.ESetVideoRequest;
 import com.autoclipper.si.domain.entities.setvideoentities.ESetVideoResponse;
 

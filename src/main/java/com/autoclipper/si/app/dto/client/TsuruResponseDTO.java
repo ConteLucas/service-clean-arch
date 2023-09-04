@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class VideoRequestDTO {
+@AllArgsConstructor
+public class TsuruResponseDTO {
     private String videoUrl;
     private String customerId;
+    private Integer[] avgTimeMinute;
     private String phoneNumber;
     private String videoStartTime;
     private String videoEndTime;
