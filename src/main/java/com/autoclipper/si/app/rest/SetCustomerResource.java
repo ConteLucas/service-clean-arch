@@ -44,6 +44,7 @@ public class SetCustomerResource {
                 .build();
     }
 
+
     @GET
     public List<SetCustomerResponseDto> getAllSetCustomers() {
         List<ESetCustomerResponse> allSetCustomers = getSetCustomerService.getAllSetCustomers();

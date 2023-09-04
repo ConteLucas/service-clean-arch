@@ -2,6 +2,8 @@ package com.autoclipper.si.app.mapper;
 
 import com.autoclipper.si.app.dto.SetCustomerRequestDto;
 import com.autoclipper.si.app.dto.SetCustomerResponseDto;
+import com.autoclipper.si.app.dto.client.ClipperHackerRequestDTO;
+import com.autoclipper.si.app.dto.client.TsuruRequestDTO;
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerRequest;
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerResponse;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class SetCustomerDtoEntityMapper {
+
     public ESetCustomerRequest dtoToEntity(SetCustomerRequestDto dto) {
         if (dto == null) {
             return null;
@@ -66,4 +69,5 @@ public class SetCustomerDtoEntityMapper {
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
+
 }

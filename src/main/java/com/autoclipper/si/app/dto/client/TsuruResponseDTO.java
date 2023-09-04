@@ -1,5 +1,6 @@
 package com.autoclipper.si.app.dto.client;
 
+import jakarta.json.bind.annotation.JsonbProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TsuruResponseDTO {
-    private String videoUrl;
-    private String customerId;
-    private Integer[] avgTimeMinute;
-    private String phoneNumber;
-    private String videoStartTime;
-    private String videoEndTime;
+    @JsonbProperty("phone")
+    private String phone;
+    @JsonbProperty("message")
+    private String message;
 }

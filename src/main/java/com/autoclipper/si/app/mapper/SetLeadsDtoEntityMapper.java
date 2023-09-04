@@ -2,6 +2,9 @@ package com.autoclipper.si.app.mapper;
 
 import com.autoclipper.si.app.dto.SetLeadsRequestDto;
 import com.autoclipper.si.app.dto.SetLeadsResponseDto;
+import com.autoclipper.si.app.dto.client.ClipperHackerRequestDTO;
+import com.autoclipper.si.app.dto.client.TsuruRequestDTO;
+import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerRequest;
 import com.autoclipper.si.domain.entities.setleadsentities.ESetLeadsResponse;
 import com.autoclipper.si.domain.entities.setleadsentities.ESetLeadsRequest;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,6 +17,31 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 @Log4j2
 public class SetLeadsDtoEntityMapper {
+
+    public ESetLeadsRequest dtoToEntity(TsuruRequestDTO tsuruRequest) {
+        if (tsuruRequest == null) {
+            return null;
+        }
+        String customerName = "api-access";
+
+        return ESetLeadsRequest.builder()
+                .leadPhone(tsuruRequest.getPhoneNumber())
+                .leadName(customerName)
+                .leadSource(tsuruRequest.getVideoUrl())
+                .build();
+    }
+    public ESetLeadsRequest dtoToEntity(ClipperHackerRequestDTO clipperHackerRequest) {
+        if (clipperHackerRequest == null) {
+            return null;
+        }
+        String customerName = "api-access";
+
+        return ESetLeadsRequest.builder()
+                .leadPhone(clipperHackerRequest.getPhone())
+                .leadName(customerName)
+                .leadSource(clipperHackerRequest.getMessage())
+                .build();
+    }
     public ESetLeadsRequest dtoToEntity(SetLeadsRequestDto dto) {
         if (dto == null) {
             return null;
@@ -62,4 +90,6 @@ public class SetLeadsDtoEntityMapper {
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
+
+
 }

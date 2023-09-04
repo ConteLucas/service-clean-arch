@@ -5,4 +5,5 @@ import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerRespon
 
 public interface ISaveSetCustomerService {
     ESetCustomerResponse saveSetCustomer(ESetCustomerRequest eSetCustomerRequest);
+
 }

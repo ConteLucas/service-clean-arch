@@ -7,8 +7,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/api")
-@RegisterRestClient(configKey = "clipper-hacker", baseUri = "http://127.0.0.1:80")
+@RegisterRestClient(configKey = "clipper-hacker")
 public interface IClipperHackerClient {
+
     @POST
     @Path("/generate_clips_from_url")
     @Produces(MediaType.APPLICATION_JSON)

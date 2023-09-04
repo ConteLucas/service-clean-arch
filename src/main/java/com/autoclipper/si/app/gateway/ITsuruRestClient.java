@@ -1,16 +1,21 @@
 package com.autoclipper.si.app.gateway;
 
-import com.autoclipper.si.app.dto.client.TsuruRequestDTO;
+import com.autoclipper.si.app.dto.client.ClipperHackerRequestDTO;
+import com.autoclipper.si.app.dto.client.TsuruResponseDTO;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import java.util.List;
 
-@RegisterRestClient(configKey = "x-api-key")
+@Path("/api")
+@RegisterRestClient(configKey = "tsuru-client")
 public interface ITsuruRestClient {
 
     @POST
-    @Path("/api/tsuru_endpoint")
-    List<TsuruRequestDTO> getMessageTsuru();
-
+    @Path("/v1/send/message/")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    TsuruResponseDTO requestClipsFromUrl(
+            ClipperHackerRequestDTO clipperHackerRequestDTO,
+            @HeaderParam("Authorization") String apiKeyTsuru);
 }
