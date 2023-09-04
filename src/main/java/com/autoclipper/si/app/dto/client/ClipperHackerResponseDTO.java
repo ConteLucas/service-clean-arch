@@ -11,23 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClipperHackerResponseDTO {
-    @JsonbProperty("videoUrl")
-
-    private String videoUrl;
-
-    @JsonbProperty("customerId")
-    private String customerId;
-
-    @JsonbProperty("avgTimeMinute")
-    private Integer[] avgTimeMinute;
-
-    @JsonbProperty("phoneNumber")
-    private String phoneNumber;
-
-    @JsonbProperty("videoStartTime")
-    private String videoStartTime;
-
-    @JsonbProperty("videoEndTime")
-    private String videoEndTime;
-
+    @JsonbProperty("phone")
+    private String customerPhone;
+    @JsonbProperty("video_url")
+    private String videoUrlCreateClip;
 }

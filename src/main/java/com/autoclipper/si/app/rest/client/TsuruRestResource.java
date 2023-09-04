@@ -17,7 +17,10 @@ public class TsuruRestResource {
 
     @Inject
     @RestClient
-    IClipperHackerClient clipperHackerService;
+    IClipperHackerClient clipperHackerClient;
+
+    @ConfigProperty(name = "clipper.hacker.api.key") // Suponha que você tenha configurado a chave no application.properties
+    String apiKey;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,8 +28,8 @@ public class TsuruRestResource {
     public Response processTsuruRequest(TsuruRequestDTO tsuruRequest) {
         // Realize qualquer validação ou manipulação necessária nos dados recebidos
 
-        // Envie os dados para o serviço ClipperHacker
-        ClipperHackerResponseDTO responseDTO = clipperHackerService.generateClipsFromUrl(tsuruRequest);
+        // Envie os dados para o serviço ClipperHacker e passe a chave de autenticação
+        ClipperHackerResponseDTO responseDTO = clipperHackerClient.generateClipsFromUrl(tsuruRequest, apiKey);
 
         // Retorne a resposta do serviço ClipperHacker
         return Response.ok(responseDTO).build();

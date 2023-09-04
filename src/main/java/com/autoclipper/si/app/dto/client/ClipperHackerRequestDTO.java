@@ -11,10 +11,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClipperHackerRequestDTO {
-    @JsonbProperty("phone")
-    private String customerPhone;
-    @JsonbProperty("video_url")
-    private String videoUrlCreateClip;
 
 
+    @JsonbProperty("videoUrl")
+
+    private String videoUrl;
+
+    @JsonbProperty("customerId")
+    private String customerId;
+
+    @JsonbProperty("avgTimeMinute")
+    private Integer[] avgTimeMinute;
+
+    @JsonbProperty("phoneNumber")
+    private String phoneNumber;
+
+    @JsonbProperty("videoStartTime")
+    private String videoStartTime;
+
+    @JsonbProperty("videoEndTime")
+    private String videoEndTime;
 }
