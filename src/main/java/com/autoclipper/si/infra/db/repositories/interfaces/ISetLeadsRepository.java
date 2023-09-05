@@ -13,5 +13,6 @@ public interface ISetLeadsRepository extends PanacheRepositoryBase<SetLeads, Int
 
     void delete(Integer id);
 
-    SetLeads findById(Integer id);
+    SetLeads updateSetLeads(Integer leadId, SetLeads updatedSetLeads);
+
 }

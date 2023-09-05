@@ -7,6 +7,7 @@ import com.autoclipper.si.infra.db.model.SetLeads;
 import com.autoclipper.si.infra.db.repositories.interfaces.ISetLeadsRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -21,13 +22,8 @@ public class SetLeadsDataProvider implements ISetLeadsGateway {
 
     @Override
     public ESetLeadsResponse save(ESetLeadsRequest eSetLeadsRequest) {
-        // Mapeia todos os campos eSetLeadsRequest para SetLeads
         SetLeads setLeads = setLeadsMapper.eSetLeadsToSetLeads(eSetLeadsRequest);
-
-        // Salva no banco de dados
         setLeads = iSetLeadsRepository.save(setLeads);
-
-        // Mapeia o resultado para ESetLeadsResponse
         return setLeadsMapper.eSetLeadsToESetLeadsResponse(setLeads);
     }
 
@@ -40,32 +36,28 @@ public class SetLeadsDataProvider implements ISetLeadsGateway {
     }
 
     @Override
-    public void delete(Integer id) {
-        iSetLeadsRepository.delete(id);
-    }
-
-    @Override
     public ESetLeadsResponse updateSetLeads(Integer id, ESetLeadsRequest eSetLeadsRequest) {
-        // Primeiro, verifique se o SetLeads com o ID existe no banco de dados
         SetLeads existingSetLeads = iSetLeadsRepository.findById(id);
-        existingSetLeads = setLeadsMapper.updateSetLeadsFromRequest(existingSetLeads, eSetLeadsRequest);
-        // Salve as alterações no banco de dados
-        existingSetLeads.persistAndFlush();
-        // Mapeie o SetLeads atualizado para ESetLeadsResponse e retorne
-        return setLeadsMapper.eSetLeadsToESetLeadsResponse(existingSetLeads);
+        if (existingSetLeads != null) {
+            existingSetLeads.setLeadName(eSetLeadsRequest.getLeadName());
+            existingSetLeads.setLeadEmail(eSetLeadsRequest.getLeadEmail());
+            existingSetLeads.setLeadPhone(eSetLeadsRequest.getLeadPhone());
+            existingSetLeads.setLeadStatus(eSetLeadsRequest.getLeadStatus());
+            existingSetLeads.setLeadSource(eSetLeadsRequest.getLeadSource());
+            existingSetLeads.persistAndFlush();
+            return setLeadsMapper.eSetLeadsToESetLeadsResponse(existingSetLeads);
+        }
+         throw new NotFoundException("SetLeads não encontrados ocm ID " + id);
     }
 
     @Override
     public ESetLeadsResponse getSetLeadsById(Integer id) {
-        // Busque o SetLeads com o ID especificado no banco de dados
         SetLeads setLeads = iSetLeadsRepository.findById(id);
-
-        if (setLeads == null) {
-            // Lançar exceção ou retornar erro adequado, pois o registro não foi encontrado
-            // Exemplo: throw new NotFoundException("SetLeads não encontrado com ID " + id);
+        if (setLeads != null) {
+            return setLeadsMapper.eSetLeadsToESetLeadsResponse(setLeads);
         }
-
-        // Mapeie o SetLeads encontrado para ESetLeadsResponse e retorne
-        return setLeadsMapper.eSetLeadsToESetLeadsResponse(setLeads);
+        throw new NotFoundException("SetLeads não encontrado com ID " + id);
     }
+
+    public void delete(Integer id){ iSetLeadsRepository.delete(id);}
 }

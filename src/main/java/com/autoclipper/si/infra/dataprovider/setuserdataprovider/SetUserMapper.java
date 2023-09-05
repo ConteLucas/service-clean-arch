@@ -31,7 +31,7 @@ public class SetUserMapper   {
                     .userEmail(setUser.getUserEmail())
                     .userPhone(setUser.getUserPhone())
                     .userPassword(setUser.getUserPassword())
-                    .userType(setUser.getUserType()) // Correção aqui
+                    .userType(setUser.getUserType())
                     .build();
         }
         throw new NullPointerException("NullPointerException set_user/SetUserMapper");
@@ -45,7 +45,7 @@ public class SetUserMapper   {
         existingSetUser.setUserEmail(eSetUserRequest.getUserEmail());
         existingSetUser.setUserPhone(eSetUserRequest.getUserPhone());
         existingSetUser.setUserPassword(eSetUserRequest.getUserPassword());
-        existingSetUser.setUserType(eSetUserRequest.getUserType()); // Correção aqui
+        existingSetUser.setUserType(eSetUserRequest.getUserType());
         return existingSetUser;
     }
 }
