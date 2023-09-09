@@ -8,11 +8,8 @@ import java.util.List;
 
 public interface ISetLeadsRepository extends PanacheRepositoryBase<SetLeads, Integer> {
     SetLeads save(SetLeads setLeadConfig);
-
     List<SetLeads> getAll();
-
     void delete(Integer id);
-
     SetLeads updateSetLeads(Integer leadId, SetLeads updatedSetLeads);
 
 }

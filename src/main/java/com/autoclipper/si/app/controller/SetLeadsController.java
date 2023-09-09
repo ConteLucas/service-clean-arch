@@ -3,6 +3,7 @@ package com.autoclipper.si.app.controller;
 import com.autoclipper.si.app.dto.setleadsclientdto.SetLeadsRequestDto;
 import com.autoclipper.si.app.dto.setleadsclientdto.SetLeadsResponseDto;
 import com.autoclipper.si.app.mapper.setleadsmappers.SetLeadsDtoToEntityMapper;
+import com.autoclipper.si.app.mapper.setleadsmappers.SetLeadsEntityToDtoMapper;
 import com.autoclipper.si.app.service.cross.MessageSucess;
 import com.autoclipper.si.app.service.interfaces.setleadsserviceinterface.IDeleteSetLeadsService;
 import com.autoclipper.si.app.service.interfaces.setleadsserviceinterface.IGetSetLeadsService;
@@ -31,25 +32,23 @@ public class SetLeadsController {
 
     @Inject
     private ISaveSetLeadsService saveSetLeadsService;
-
     @Inject
     private IGetSetLeadsService getSetLeadsService;
-
     @Inject
     private IUpdateSetLeadsService updateSetLeadsService;
-
     @Inject
     private IDeleteSetLeadsService deleteSetLeadsService;
-
     @Inject
-    private SetLeadsDtoToEntityMapper mapper;
+    private SetLeadsDtoToEntityMapper setLeadsDtoToEntityMapper;
+    @Inject
+    private SetLeadsEntityToDtoMapper setLeadsEntityToDtoMapper;
 
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createSetLeads(@Valid SetLeadsRequestDto requestDto) {
-        ESetLeadsRequest eSetLeadsRequest = mapper.dtoToEntity(requestDto);
+        ESetLeadsRequest eSetLeadsRequest = setLeadsDtoToEntityMapper.dtoToEntity(requestDto);
         ESetLeadsResponse createdSetLeads = saveSetLeadsService.saveSetLeads(eSetLeadsRequest);
         return Response.status(Response.Status.CREATED)
                 .entity(createdSetLeads)
@@ -60,12 +59,16 @@ public class SetLeadsController {
     public List<SetLeadsResponseDto> getAllSetLeads() {
         List<ESetLeadsResponse> allSetLeads = getSetLeadsService.getAllSetLeads();
         return allSetLeads.stream()
-                .map(mapper::entityToDto)
+                .map(setLeadsEntityToDtoMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @GET
     @Path("/{id}")
+    @APIResponses(value = {
+            @APIResponse(responseCode = "406", description = "Lead ID não encontrado."),
+            @APIResponse(responseCode = "200", description = "Lead ID listado com sucesso.")
+    })
     public Response getSetLeadsById(@PathParam("id") Integer id) {
         ESetLeadsResponse setLeads = getSetLeadsService.getSetLeadsById(id);
         if (setLeads != null) {
@@ -77,8 +80,12 @@ public class SetLeadsController {
 
     @PUT
     @Path("/{id}")
+    @APIResponses(value = {
+            @APIResponse(responseCode = "406", description = "Lead ID não encontrado."),
+            @APIResponse(responseCode = "200", description = "Lead ID deletado com sucesso.")
+    })
     public Response updateSetLeads(@PathParam("id") Integer id, SetLeadsRequestDto requestDto) {
-        ESetLeadsRequest eSetLeadsRequest = mapper.dtoToEntity(requestDto);
+        ESetLeadsRequest eSetLeadsRequest = setLeadsDtoToEntityMapper.dtoToEntity(requestDto);
         ESetLeadsResponse updatedSetLeads = updateSetLeadsService.updateSetLeads(id, eSetLeadsRequest);
         if (updatedSetLeads != null) {
             return Response.ok(updatedSetLeads).build();
@@ -92,7 +99,7 @@ public class SetLeadsController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
-        @APIResponse(responseCode = "200", description = "Lead ID não encontrado."),
+        @APIResponse(responseCode = "406", description = "Lead ID não encontrado."),
             @APIResponse(responseCode = "200", description = "Lead ID deletado com sucesso.")
     })
     @Path("/{id}")

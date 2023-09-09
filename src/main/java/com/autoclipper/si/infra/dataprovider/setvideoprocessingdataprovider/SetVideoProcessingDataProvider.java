@@ -1,13 +1,15 @@
-package com.autoclipper.si.infra.dataprovider.setvideodataprovider;
+package com.autoclipper.si.infra.dataprovider.setvideoprocessingdataprovider;
 
+import com.autoclipper.si.app.dto.setvideoprocessingclientdto.SetVideoProcessingRequestDto;
+import com.autoclipper.si.app.service.cross.InternalRuntimeException;
 import com.autoclipper.si.domain.entities.setvideoprocessingentities.ESetVideoProcessingRequest;
 import com.autoclipper.si.domain.entities.setvideoprocessingentities.ESetVideoProcessingResponse;
 import com.autoclipper.si.domain.gateway.ISetVideoProcessingGateway;
-import com.autoclipper.si.infra.dataprovider.setvideoprocessingdataprovider.SetVideoProcessingMapper;
 import com.autoclipper.si.infra.db.model.SetVideoProcessing;
 import com.autoclipper.si.infra.db.repositories.interfaces.ISetVideoProcessingRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class SetVideoProcessingDataProvider implements ISetVideoProcessingGateway {
 
     @Inject
-    private ISetVideoProcessingRepository setVideoProcessingRepository;
+    private ISetVideoProcessingRepository iSetVideoProcessingRepository;
 
     @Inject
     private SetVideoProcessingMapper setVideoProcessingMapper;
@@ -23,31 +25,24 @@ public class SetVideoProcessingDataProvider implements ISetVideoProcessingGatewa
     @Override
     public ESetVideoProcessingResponse save(ESetVideoProcessingRequest eSetVideoProcessingRequest) {
         SetVideoProcessing setVideoProcessing = setVideoProcessingMapper.eSetVideoProcessingRequestToSetVideoProcessing(eSetVideoProcessingRequest);
-        setVideoProcessing = setVideoProcessingRepository.save(setVideoProcessing);
+        setVideoProcessing = iSetVideoProcessingRepository.save(setVideoProcessing);
         return setVideoProcessingMapper.setVideoProcessingToESetVideoProcessingResponse(setVideoProcessing);
     }
 
     @Override
     public List<ESetVideoProcessingResponse> getAll() {
-        List<SetVideoProcessing> all = setVideoProcessingRepository.getAll();
+        List<SetVideoProcessing> all = iSetVideoProcessingRepository.getAll();
         return setVideoProcessingMapper.setVideoProcessingListToESetVideoProcessingResponseList(all);
     }
 
     @Override
-    public void delete(Integer id) {
-        setVideoProcessingRepository.delete(id);
-    }
-
-    @Override
     public ESetVideoProcessingResponse updateSetVideoProcessing(Integer id, ESetVideoProcessingRequest eSetVideoProcessingRequest) {
-        SetVideoProcessing existingSetVideoProcessing = setVideoProcessingRepository.findById(id);
+        SetVideoProcessing existingSetVideoProcessing = iSetVideoProcessingRepository.findById(id);
 
         if (existingSetVideoProcessing == null) {
-            // Lançar exceção ou retornar erro adequado, pois o registro não foi encontrado
-            // Exemplo: throw new NotFoundException("SetVideoProcessing não encontrado com ID " + id);
+            throw new InternalRuntimeException("SetVideoProcessing não encontrado com ID " + id);
         }
 
-        // Atualize os campos relevantes da entidade SetVideoProcessing com base na solicitação (eSetVideoProcessingRequest)
         existingSetVideoProcessing.setProcessId(eSetVideoProcessingRequest.getProcessId());
         existingSetVideoProcessing.setCustomerId(eSetVideoProcessingRequest.getCustomerId());
         existingSetVideoProcessing.setUrl(eSetVideoProcessingRequest.getUrl());
@@ -62,12 +57,16 @@ public class SetVideoProcessingDataProvider implements ISetVideoProcessingGatewa
 
     @Override
     public ESetVideoProcessingResponse getSetVideoProcessingById(Integer id) {
-        SetVideoProcessing setVideoProcessing = setVideoProcessingRepository.findById(id);
-
-        if (setVideoProcessing == null) {
-            // Lançar exceção ou retornar erro adequado, pois o registro não foi encontrado
-            // Exemplo: throw new NotFoundException("SetVideoProcessing não encontrado com ID " + id);
+        SetVideoProcessing setVideoProcessing = iSetVideoProcessingRepository.findById(id);
+        if (setVideoProcessing != null) {
+            return setVideoProcessingMapper.setVideoProcessingToESetVideoProcessingResponse(setVideoProcessing);
         }
-        return setVideoProcessingMapper.setVideoProcessingToESetVideoProcessingResponse(setVideoProcessing);
+        throw new NotFoundException("SetLeads não encontrado com ID " + id);
     }
+
+    @Override
+    public void delete(Integer id) {
+        iSetVideoProcessingRepository.delete(id);
+    }
+
 }

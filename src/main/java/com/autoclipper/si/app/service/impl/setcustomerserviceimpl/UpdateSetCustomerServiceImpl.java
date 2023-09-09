@@ -13,8 +13,11 @@ public class UpdateSetCustomerServiceImpl implements IUpdateSetCustomerService {
     @Inject
     private IUpdateSetCustomerUseCase updateSetCustomerUseCase;
 
+
     @Override
-    public ESetCustomerResponse updateSetCustomer(Integer id, ESetCustomerRequest eSetCustomerRequest) {
-        return updateSetCustomerUseCase.updateSetCustomer(id, eSetCustomerRequest);
+    public ESetCustomerResponse updateSetCustomerId(Integer id, ESetCustomerRequest eSetCustomerRequest) {
+        return updateSetCustomerUseCase.updateSetCustomerId(id, eSetCustomerRequest);
     }
+
+
 }

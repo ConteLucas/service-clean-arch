@@ -10,17 +10,10 @@ import java.util.List;
 
 @ApplicationScoped
 public class GetSetVideoProcessingServiceImpl implements IGetSetVideoProcessingService {
-
     @Inject
     private IGetSetVideoProcessingUseCase getSetVideoProcessingUseCase;
-
     @Override
-    public List<ESetVideoProcessingResponse> getAllSetVideoProcessing() {
-        return getSetVideoProcessingUseCase.getAll();
-    }
-
+    public List<ESetVideoProcessingResponse> getAllSetVideoProcessing() { return getSetVideoProcessingUseCase.getAll(); }
     @Override
-    public ESetVideoProcessingResponse getSetVideoProcessingById(Integer id) {
-        return getSetVideoProcessingUseCase.getSetVideoProcessingById(id);
-    }
+    public ESetVideoProcessingResponse getSetVideoProcessingById(Integer id) { return getSetVideoProcessingUseCase.getSetVideoProcessingById(id); }
 }

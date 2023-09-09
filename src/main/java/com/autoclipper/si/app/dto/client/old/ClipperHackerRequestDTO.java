@@ -1,18 +1,16 @@
-package com.autoclipper.si.app.dto.client;
+package com.autoclipper.si.app.dto.client.old;
 
 import jakarta.json.bind.annotation.JsonbProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TsuruResponseDTO {
+public class ClipperHackerRequestDTO {
     @JsonbProperty("phone")
     private String phone;
     @JsonbProperty("message")
     private String message;
 }
+

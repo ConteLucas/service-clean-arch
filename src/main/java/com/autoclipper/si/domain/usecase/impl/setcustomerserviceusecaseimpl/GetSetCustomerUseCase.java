@@ -23,4 +23,5 @@ public class GetSetCustomerUseCase implements IGetSetCustomerUseCase {
     public ESetCustomerResponse getSetCustomerById(Integer id) {
         return iSetCustomerGateway.getSetCustomerById(id);
     }
+
 }

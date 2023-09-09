@@ -27,9 +27,4 @@ public class SetVideoRepositoryImpl implements ISetVideoRepository {
     public void delete(Integer id) {
         SetVideo.deleteById(id);
     }
-
-    @Override
-    public SetVideo findById(Integer id) {
-        return findById(id);
-    }
 }

@@ -39,23 +39,4 @@ public class SetUserDtoToEntityMapper {
                 .build();
     }
 
-    public SetUserResponseDto entityToDto(ESetUserResponse entity) {
-        if (entity == null) {
-            return null;
-        }
-        return SetUserResponseDto.builder()
-                .userId(entity.getUserId())
-                .userPhone(entity.getUserPhone())
-                .userType(entity.getUserType())
-                .userEmail(entity.getUserEmail())
-                .userCreationDate(entity.getUserCreationDate())
-                .build();
-    }
-
-    public List<SetUserResponseDto> entityListToDtoList(List<ESetUserResponse> entityList) {
-        return entityList.stream()
-                .filter(Objects::nonNull)
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
-    }
 }

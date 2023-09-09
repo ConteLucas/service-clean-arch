@@ -7,12 +7,8 @@ import java.util.List;
 
 public interface ISetLeadsGateway {
     ESetLeadsResponse save(ESetLeadsRequest eSetLeadsRequest);
-
     List<ESetLeadsResponse> getAll();
-
     void delete(Integer id);
-
     ESetLeadsResponse updateSetLeads(Integer id, ESetLeadsRequest eSetLeadsRequest);
-
     ESetLeadsResponse getSetLeadsById(Integer id);
 }

@@ -23,4 +23,5 @@ public class GetSetCustomerServiceImpl implements IGetSetCustomerService {
     public ESetCustomerResponse getSetCustomerById(Integer id) {
         return getSetCustomerUseCase.getSetCustomerById(id);
     }
+
 }

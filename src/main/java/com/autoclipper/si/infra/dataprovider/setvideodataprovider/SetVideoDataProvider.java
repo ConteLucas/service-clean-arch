@@ -1,5 +1,6 @@
 package com.autoclipper.si.infra.dataprovider.setvideodataprovider;
 
+import com.autoclipper.si.app.service.cross.InternalRuntimeException;
 import com.autoclipper.si.domain.entities.setvideoentities.ESetVideoRequest;
 import com.autoclipper.si.domain.entities.setvideoentities.ESetVideoResponse;
 import com.autoclipper.si.domain.gateway.ISetVideoGateway;
@@ -42,8 +43,7 @@ public class SetVideoDataProvider implements ISetVideoGateway {
         SetVideo existingSetVideo = setVideoRepository.findById(id);
 
         if (existingSetVideo == null) {
-            // Lançar exceção ou retornar erro adequado, pois o registro não foi encontrado
-            // Exemplo: throw new NotFoundException("SetVideo não encontrado com ID " + id);
+            throw new InternalRuntimeException("SetVideo não encontrado com ID " + id);
         }
         existingSetVideo.setProcessId(eSetVideoRequest.getProcessId());
         existingSetVideo = setVideoMapper.updateSetVideoFromRequest(existingSetVideo, eSetVideoRequest);
@@ -56,8 +56,7 @@ public class SetVideoDataProvider implements ISetVideoGateway {
         SetVideo setVideo = setVideoRepository.findById(id);
 
         if (setVideo == null) {
-            // Lançar exceção ou retornar erro adequado, pois o registro não foi encontrado
-            // Exemplo: throw new NotFoundException("SetVideo não encontrado com ID " + id);
+            throw new InternalRuntimeException("SetVideo não encontrado com ID " + id);
         }
         return setVideoMapper.setVideoToESetVideoResponse(setVideo);
     }

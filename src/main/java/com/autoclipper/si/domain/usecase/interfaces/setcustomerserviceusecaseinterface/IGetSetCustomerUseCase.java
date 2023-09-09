@@ -7,4 +7,5 @@ import java.util.List;
 public interface IGetSetCustomerUseCase {
     List<ESetCustomerResponse> getAll();
     ESetCustomerResponse getSetCustomerById(Integer id);
+
 }

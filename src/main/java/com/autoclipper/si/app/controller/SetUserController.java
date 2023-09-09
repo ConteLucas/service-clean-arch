@@ -4,6 +4,7 @@ import com.autoclipper.si.app.dto.setuserclientdto.SetUserRequestDto;
 import com.autoclipper.si.app.dto.setuserclientdto.SetUserResponseDto;
 import com.autoclipper.si.app.mapper.setcustomeruser.SetUserDtoToEntityMapper;
 
+import com.autoclipper.si.app.mapper.setcustomeruser.SetUserEntityToDToMapper;
 import com.autoclipper.si.app.service.interfaces.setuserserviceinterface.IDeleteSetUserService;
 import com.autoclipper.si.app.service.interfaces.setuserserviceinterface.IGetSetUserService;
 import com.autoclipper.si.app.service.interfaces.setuserserviceinterface.ISaveSetUserService;
@@ -25,22 +26,20 @@ public class SetUserController {
 
     @Inject
     private ISaveSetUserService saveSetUserService;
-
     @Inject
     private IGetSetUserService getSetUserService;
-
     @Inject
     private IUpdateSetUserService updateSetUserService;
-
     @Inject
     private IDeleteSetUserService deleteSetUserService;
-
     @Inject
-    private SetUserDtoToEntityMapper mapper;
+    private SetUserDtoToEntityMapper setUserDtoToEntityMapper;
+    @Inject
+    private SetUserEntityToDToMapper setUserEntityToDToMapper;
 
     @POST
     public Response createSetUser(SetUserRequestDto requestDto) {
-        ESetUserRequest eSetUserRequest = mapper.dtoToEntity(requestDto);
+        ESetUserRequest eSetUserRequest = setUserDtoToEntityMapper.dtoToEntity(requestDto);
         ESetUserResponse createdSetUser = saveSetUserService.saveSetUser(eSetUserRequest);
         return Response.status(Response.Status.CREATED)
                 .entity(createdSetUser)
@@ -51,7 +50,7 @@ public class SetUserController {
     public List<SetUserResponseDto> getAllSetUsers() {
         List<ESetUserResponse> allSetUsers = getSetUserService.getAllSetUsers();
         return allSetUsers.stream()
-                .map(mapper::entityToDto)
+                .map(setUserEntityToDToMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -69,7 +68,7 @@ public class SetUserController {
     @PUT
     @Path("/{id}")
     public Response updateSetUser(@PathParam("id") Integer id, SetUserRequestDto requestDto) {
-        ESetUserRequest eSetUserRequest = mapper.dtoToEntity(requestDto);
+        ESetUserRequest eSetUserRequest = setUserDtoToEntityMapper.dtoToEntity(requestDto);
         ESetUserResponse updatedSetUser = updateSetUserService.updateSetUser(id, eSetUserRequest);
         if (updatedSetUser != null) {
             return Response.ok(updatedSetUser).build();

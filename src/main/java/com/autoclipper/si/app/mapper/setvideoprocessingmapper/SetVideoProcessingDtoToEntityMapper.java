@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
-@Log4j2
 public class SetVideoProcessingDtoToEntityMapper {
     public ESetVideoProcessingRequest dtoToEntity(SetVideoProcessingRequestDto dto) {
         if (dto == null) {
@@ -42,27 +41,5 @@ public class SetVideoProcessingDtoToEntityMapper {
                 .avgClipDuration(dto.getAvgClipDuration())
                 .statusReq(dto.getStatusReq())
                 .build();
-    }
-
-    public SetVideoProcessingResponseDto entityToDto(ESetVideoProcessingResponse entity) {
-        if (entity == null) {
-            return null;
-        }
-        return SetVideoProcessingResponseDto.builder()
-                .processId(entity.getProcessId())
-                .customerId(entity.getCustomerId())
-                .url(entity.getUrl())
-                .startVideo(entity.getStartVideo())
-                .endVideo(entity.getEndVideo())
-                .avgClipDuration(entity.getAvgClipDuration())
-                .statusReq(entity.getStatusReq())
-                .build();
-    }
-
-    public List<SetVideoProcessingResponseDto> entityListToDtoList(List<ESetVideoProcessingResponse> entityList) {
-        return entityList.stream()
-                .filter(Objects::nonNull)
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
     }
 }

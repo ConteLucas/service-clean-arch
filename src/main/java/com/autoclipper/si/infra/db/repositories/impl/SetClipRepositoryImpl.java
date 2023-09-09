@@ -6,17 +6,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
-import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.findById;
-import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.listAll;
-
 @ApplicationScoped
 public class SetClipRepositoryImpl implements ISetClipRepository {
 
     @Override
     public SetClip save(SetClip setClip) {
         setClip.persistAndFlush();
-        return setClip;
-    }
+        return findById(setClip.getClipId()); }
 
     @Override
     public List<SetClip> getAll() {
@@ -24,12 +20,6 @@ public class SetClipRepositoryImpl implements ISetClipRepository {
     }
 
     @Override
-    public void delete(Integer id) {
-        SetClip.deleteById(id);
-    }
+    public void delete(Integer id) { findById(id).persistAndFlush(); }
 
-    @Override
-    public SetClip findById(Integer id) {
-        return findById(id);
-    }
 }

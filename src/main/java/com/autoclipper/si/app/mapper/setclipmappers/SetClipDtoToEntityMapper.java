@@ -45,28 +45,4 @@ public class SetClipDtoToEntityMapper {
                 .transcriptClip(dto.getTranscriptClip())
                 .build();
     }
-
-    public SetClipResponseDto entityToDto(ESetClipResponse entity) {
-        if (entity == null) {
-            return null;
-        }
-        return SetClipResponseDto.builder()
-                .clipId(entity.getClipId())
-                .processId(entity.getProcessId())
-                .customerId(entity.getCustomerId())
-                .videoId(entity.getVideoId())
-                .videoUrlCreateClip(entity.getVideoUrlCreateClip())
-                .title(entity.getTitle())
-                .thumb(entity.getThumb())
-                .score(entity.getScore())
-                .transcriptClip(entity.getTranscriptClip())
-                .build();
-    }
-
-    public List<SetClipResponseDto> entityListToDtoList(List<ESetClipResponse> entityList) {
-        return entityList.stream()
-                .filter(Objects::nonNull)
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
-    }
 }

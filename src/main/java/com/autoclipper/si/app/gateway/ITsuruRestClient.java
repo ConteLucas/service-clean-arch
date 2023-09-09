@@ -1,7 +1,7 @@
 package com.autoclipper.si.app.gateway;
 
-import com.autoclipper.si.app.dto.client.ClipperHackerRequestDTO;
-import com.autoclipper.si.app.dto.client.TsuruResponseDTO;
+import com.autoclipper.si.app.dto.client.old.ClipperHackerRequestDTO;
+import com.autoclipper.si.app.dto.client.old.TsuruResponseDTO;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

@@ -7,10 +7,7 @@ import java.util.List;
 
 public interface ISetClipRepository extends PanacheRepositoryBase<SetClip, Integer> {
     SetClip save(SetClip setClip);
-
     List<SetClip> getAll();
-
     void delete(Integer id);
 
-    SetClip findById(Integer id);
 }

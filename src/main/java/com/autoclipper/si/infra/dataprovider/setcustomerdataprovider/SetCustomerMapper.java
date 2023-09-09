@@ -3,9 +3,7 @@ package com.autoclipper.si.infra.dataprovider.setcustomerdataprovider;
 
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerRequest;
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerResponse;
-import com.autoclipper.si.domain.entities.setleadsentities.ESetLeadsRequest;
 import com.autoclipper.si.infra.db.model.SetCustomer;
-import com.autoclipper.si.infra.db.model.SetLeads;
 import groovy.util.logging.Log4j2;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -20,6 +18,9 @@ public class SetCustomerMapper {
     public SetCustomer eSetCustomerToSetCustomer(ESetCustomerRequest eSetCustomerRequest) {
         if (Objects.nonNull(eSetCustomerRequest)) {
             return SetCustomer.builder()
+                    .customerId(eSetCustomerRequest.getCustomerId())
+                    .userId(eSetCustomerRequest.getUserId())
+                    .leadId(eSetCustomerRequest.getLeadId())
                     .customerName(eSetCustomerRequest.getCustomerName())
                     .customerPhone(eSetCustomerRequest.getCustomerPhone())
                     .customerAddress(eSetCustomerRequest.getCustomerAddress())
@@ -34,6 +35,8 @@ public class SetCustomerMapper {
         if (Objects.nonNull(setCustomer)) {
             return ESetCustomerResponse.builder()
                     .customerId(setCustomer.getCustomerId())
+                    .userId(setCustomer.getUserId().getUserId())
+                    .leadId(setCustomer.getLeadId().getLeadId())
                     .customerName(setCustomer.getCustomerName())
                     .customerPhone(setCustomer.getCustomerPhone())
                     .customerAddress(setCustomer.getCustomerAddress())
@@ -56,4 +59,6 @@ public class SetCustomerMapper {
         existingSetCustomer.setCustomerCep(eSetCustomerRequest.getCustomerCep());
         return existingSetCustomer;
     }
+
+
 }

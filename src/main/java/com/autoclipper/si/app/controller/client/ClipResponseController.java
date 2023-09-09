@@ -20,8 +20,9 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-@Path("api/clip_message")
-public class ClipperHackerController {
+@Path("api/clip_response")
+public class ClipResponseController {
+
 
     @Inject
     @RestClient
@@ -47,24 +48,9 @@ public class ClipperHackerController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response processClipperHackerRequest(ClipperHackerRequestDTO clipperHackerRequest){
         TsuruResponseDTO responseDTO = tsuruRestClient.requestClipsFromUrl(clipperHackerRequest, apiKeyTsuru);
-
         ESetLeadsRequest eSetLeadsRequest = mapper.dtoToEntity(clipperHackerRequest);
         ESetLeadsResponse createdSetLeads = updateSetLeadsService.updateSetLeads(1,eSetLeadsRequest);
-
         return Response.ok(responseDTO).build();
     }
-    @PUT
-    @Transactional
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public Response updateSetCustomerId (@PathParam("id") Integer id, SetCustomerRequestDto requestDto) {
-        ESetCustomerRequest eSetCustomerRequest = mapperCustomer.dtoToEntity(requestDto);
-        ESetCustomerResponse updatedSetCustomerId = updateSetCustomerService.updateSetCustomerId(id, eSetCustomerRequest);
-        if (updatedSetCustomerId != null) {
-            return Response.ok(updatedSetCustomerId).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
+
 }

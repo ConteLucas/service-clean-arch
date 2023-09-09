@@ -1,14 +1,15 @@
 package com.autoclipper.si.app.controller;
 
-import com.autoclipper.si.app.dto.setvideoclientdto.SetVideoRequestDto;
-import com.autoclipper.si.app.dto.setvideoclientdto.SetVideoResponseDto;
-import com.autoclipper.si.app.mapper.setvideomappers.SetVideoDtoToEntityMapper;
-import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.IDeleteSetVideoService;
-import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.IGetSetVideoService;
-import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.ISaveSetVideoService;
-import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.IUpdateSetVideoService;
-import com.autoclipper.si.domain.entities.setvideoentities.ESetVideoRequest;
-import com.autoclipper.si.domain.entities.setvideoentities.ESetVideoResponse;
+import com.autoclipper.si.app.dto.setvideoprocessingclientdto.SetVideoProcessingRequestDto;
+import com.autoclipper.si.app.dto.setvideoprocessingclientdto.SetVideoProcessingResponseDto;
+import com.autoclipper.si.app.mapper.setvideoprocessingmapper.SetVideoProcessingDtoToEntityMapper;
+import com.autoclipper.si.app.mapper.setvideoprocessingmapper.SetVideoProcessingEntityToDtoMapper;
+import com.autoclipper.si.app.service.interfaces.setvideoprocessingserviceinterface.IDeleteSetVideoProcessingService;
+import com.autoclipper.si.app.service.interfaces.setvideoprocessingserviceinterface.IGetSetVideoProcessingService;
+import com.autoclipper.si.app.service.interfaces.setvideoprocessingserviceinterface.ISaveSetVideoProcessingService;
+import com.autoclipper.si.app.service.interfaces.setvideoprocessingserviceinterface.IUpdateSetVideoProcessingService;
+import com.autoclipper.si.domain.entities.setvideoprocessingentities.ESetVideoProcessingRequest;
+import com.autoclipper.si.domain.entities.setvideoprocessingentities.ESetVideoProcessingResponse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -23,64 +24,58 @@ import java.util.stream.Collectors;
 public class SetVideoProcessingController {
 
     @Inject
-    private ISaveSetVideoService saveSetVideoService;
-
+    private ISaveSetVideoProcessingService saveSetVideoProcessingService;
     @Inject
-    private IGetSetVideoService getSetVideoService;
-
+    private IGetSetVideoProcessingService getSetVideoProcessingService;
     @Inject
-    private IUpdateSetVideoService updateSetVideoService;
-
+    private IUpdateSetVideoProcessingService updateSetVideoProcessingService;
     @Inject
-    private IDeleteSetVideoService deleteSetVideoService;
-
+    private IDeleteSetVideoProcessingService deleteSetVideoProcessingService;
     @Inject
-    private SetVideoDtoToEntityMapper mapper;
+    private SetVideoProcessingDtoToEntityMapper setVideoProcessingDtoToEntityMapper;
+    @Inject
+    private SetVideoProcessingEntityToDtoMapper setVideoProcessingEntityToDtoMapper;
 
     @POST
-    public Response createSetVideo(SetVideoRequestDto requestDto) {
-        ESetVideoRequest eSetVideoRequest = mapper.dtoToEntity(requestDto);
-        ESetVideoResponse createdSetVideo = saveSetVideoService.saveSetVideo(eSetVideoRequest);
+    public Response createSetVideoProcessing(SetVideoProcessingRequestDto requestDto) {
+        ESetVideoProcessingRequest eSetVideoProcessingRequest = setVideoProcessingDtoToEntityMapper.dtoToEntity(requestDto);
+        ESetVideoProcessingResponse createdSetVideoProcessing = saveSetVideoProcessingService.saveSetVideoProcessing(eSetVideoProcessingRequest);
         return Response.status(Response.Status.CREATED)
-                .entity(createdSetVideo)
+                .entity(createdSetVideoProcessing)
                 .build();
     }
-
     @GET
-    public List<SetVideoResponseDto> getAllSetVideos() {
-        List<ESetVideoResponse> allSetVideos = getSetVideoService.getAllSetVideos();
-        return allSetVideos.stream()
-                .map(mapper::entityToDto)
+    public List<SetVideoProcessingResponseDto> getAllSetVideoProcessings() {
+        List<ESetVideoProcessingResponse> allSetVideoProcessings = getSetVideoProcessingService.getAllSetVideoProcessing();
+        return allSetVideoProcessings.stream()
+                .map(setVideoProcessingEntityToDtoMapper::entityToDto)
                 .collect(Collectors.toList());
     }
-
     @GET
     @Path("/{id}")
-    public Response getSetVideoById(@PathParam("id") Integer id) {
-        ESetVideoResponse setVideo = getSetVideoService.getSetVideoById(id);
-        if (setVideo != null) {
-            return Response.ok(setVideo).build();
+    public Response getSetVideoProcessingById(@PathParam("id") Integer id) {
+        ESetVideoProcessingResponse setVideoProcessing = getSetVideoProcessingService.getSetVideoProcessingById(id);
+        if (setVideoProcessing != null) {
+            return Response.ok(setVideoProcessing).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
     @PUT
     @Path("/{id}")
-    public Response updateSetVideo(@PathParam("id") Integer id, SetVideoRequestDto requestDto) {
-        ESetVideoRequest eSetVideoRequest = mapper.dtoToEntity(requestDto);
-        ESetVideoResponse updatedSetVideo = updateSetVideoService.updateSetVideo(id, eSetVideoRequest);
-        if (updatedSetVideo != null) {
-            return Response.ok(updatedSetVideo).build();
+    public Response updateSetVideoProcessing(@PathParam("id") Integer id, SetVideoProcessingRequestDto requestDto) {
+        ESetVideoProcessingRequest eSetVideoProcessingRequest = setVideoProcessingDtoToEntityMapper.dtoToEntity(requestDto);
+        ESetVideoProcessingResponse updatedSetVideoProcessing = updateSetVideoProcessingService.updateSetVideoProcessing(id, eSetVideoProcessingRequest);
+        if (updatedSetVideoProcessing != null) {
+            return Response.ok(updatedSetVideoProcessing).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
     @DELETE
     @Path("/{id}")
-    public Response deleteSetVideo(@PathParam("id") Integer id) {
-        deleteSetVideoService.deleteSetVideo(id);
+    public Response deleteSetVideoProcessing(@PathParam("id") Integer id) {
+        deleteSetVideoProcessingService.deleteSetVideoProcessing(id);
         return Response.noContent().build();
     }
 }

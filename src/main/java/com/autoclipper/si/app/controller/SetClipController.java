@@ -3,6 +3,7 @@ package com.autoclipper.si.app.controller;
 import com.autoclipper.si.app.dto.setclipclientdto.SetClipRequestDto;
 import com.autoclipper.si.app.dto.setclipclientdto.SetClipResponseDto;
 import com.autoclipper.si.app.mapper.setclipmappers.SetClipDtoToEntityMapper;
+import com.autoclipper.si.app.mapper.setclipmappers.SetClipEntityToDtoMapper;
 import com.autoclipper.si.app.service.interfaces.setclipserviceinterface.IDeleteSetClipService;
 import com.autoclipper.si.app.service.interfaces.setclipserviceinterface.IGetSetClipService;
 import com.autoclipper.si.app.service.interfaces.setclipserviceinterface.ISaveSetClipService;
@@ -24,22 +25,20 @@ public class SetClipController {
 
     @Inject
     private ISaveSetClipService saveSetClipService;
-
     @Inject
     private IGetSetClipService getSetClipService;
-
     @Inject
     private IUpdateSetClipService updateSetClipService;
-
     @Inject
     private IDeleteSetClipService deleteSetClipService;
-
     @Inject
-    private SetClipDtoToEntityMapper mapper;
+    private SetClipDtoToEntityMapper setClipDtoToEntityMapper;
+    @Inject
+    private SetClipEntityToDtoMapper setClipEntityToDtoMapper;
 
     @POST
     public Response createSetClip(SetClipRequestDto requestDto) {
-        ESetClipRequest eSetClipRequest = mapper.dtoToEntity(requestDto);
+        ESetClipRequest eSetClipRequest = setClipDtoToEntityMapper.dtoToEntity(requestDto);
         ESetClipResponse createdSetClip = saveSetClipService.saveSetClip(eSetClipRequest);
         return Response.status(Response.Status.CREATED)
                 .entity(createdSetClip)
@@ -50,7 +49,7 @@ public class SetClipController {
     public List<SetClipResponseDto> getAllSetClips() {
         List<ESetClipResponse> allSetClips = getSetClipService.getAllSetClips();
         return allSetClips.stream()
-                .map(mapper::entityToDto)
+                .map(setClipEntityToDtoMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -68,7 +67,7 @@ public class SetClipController {
     @PUT
     @Path("/{id}")
     public Response updateSetClip(@PathParam("id") Integer id, SetClipRequestDto requestDto) {
-        ESetClipRequest eSetClipRequest = mapper.dtoToEntity(requestDto);
+        ESetClipRequest eSetClipRequest = setClipDtoToEntityMapper.dtoToEntity(requestDto);
         ESetClipResponse updatedSetClip = updateSetClipService.updateSetClip(id, eSetClipRequest);
         if (updatedSetClip != null) {
             return Response.ok(updatedSetClip).build();

@@ -4,6 +4,7 @@ import com.autoclipper.si.app.dto.setvideoclientdto.SetVideoRequestDto;
 import com.autoclipper.si.app.dto.setvideoclientdto.SetVideoResponseDto;
 import com.autoclipper.si.app.mapper.setvideomappers.SetVideoDtoToEntityMapper;
 
+import com.autoclipper.si.app.mapper.setvideomappers.SetVideoEntityToDtoMapper;
 import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.IDeleteSetVideoService;
 import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.IGetSetVideoService;
 import com.autoclipper.si.app.service.interfaces.setvideoserviceinterface.ISaveSetVideoService;
@@ -25,22 +26,20 @@ public class SetVideoController {
 
     @Inject
     private ISaveSetVideoService saveSetVideoService;
-
     @Inject
     private IGetSetVideoService getSetVideoService;
-
     @Inject
     private IUpdateSetVideoService updateSetVideoService;
-
     @Inject
     private IDeleteSetVideoService deleteSetVideoService;
-
     @Inject
-    private SetVideoDtoToEntityMapper mapper;
+    private SetVideoDtoToEntityMapper setVideoDtoToEntityMapper;
+    @Inject
+    private SetVideoEntityToDtoMapper setVideoEntityToDtoMapper;
 
     @POST
     public Response createSetVideo(SetVideoRequestDto requestDto) {
-        ESetVideoRequest eSetVideoRequest = mapper.dtoToEntity(requestDto);
+        ESetVideoRequest eSetVideoRequest = setVideoDtoToEntityMapper.dtoToEntity(requestDto);
         ESetVideoResponse createdSetVideo = saveSetVideoService.saveSetVideo(eSetVideoRequest);
         return Response.status(Response.Status.CREATED)
                 .entity(createdSetVideo)
@@ -51,7 +50,7 @@ public class SetVideoController {
     public List<SetVideoResponseDto> getAllSetVideos() {
         List<ESetVideoResponse> allSetVideos = getSetVideoService.getAllSetVideos();
         return allSetVideos.stream()
-                .map(mapper::entityToDto)
+                .map(setVideoEntityToDtoMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -69,7 +68,7 @@ public class SetVideoController {
     @PUT
     @Path("/{id}")
     public Response updateSetVideo(@PathParam("id") Integer id, SetVideoRequestDto requestDto) {
-        ESetVideoRequest eSetVideoRequest = mapper.dtoToEntity(requestDto);
+        ESetVideoRequest eSetVideoRequest = setVideoDtoToEntityMapper.dtoToEntity(requestDto);
         ESetVideoResponse updatedSetVideo = updateSetVideoService.updateSetVideo(id, eSetVideoRequest);
         if (updatedSetVideo != null) {
             return Response.ok(updatedSetVideo).build();

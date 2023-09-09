@@ -12,7 +12,8 @@ public interface ISetCustomerGateway {
 
     void delete(Integer id);
 
-    ESetCustomerResponse updateSetCustomer(Integer id, ESetCustomerRequest eSetCustomerRequest);
-
     ESetCustomerResponse getSetCustomerById(Integer id);
+
+    ESetCustomerResponse updateSetCustomerId(Integer id, ESetCustomerRequest eSetCustomerRequest);
+
 }

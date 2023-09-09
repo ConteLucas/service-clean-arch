@@ -1,7 +1,7 @@
 package com.autoclipper.si.app.controller.client;
 
-import com.autoclipper.si.app.dto.client.ClipperHackerResponseDTO;
-import com.autoclipper.si.app.dto.client.TsuruRequestDTO;
+import com.autoclipper.si.app.dto.client.old.ClipperHackerResponseDTO;
+import com.autoclipper.si.app.dto.client.old.TsuruRequestDTO;
 import com.autoclipper.si.app.gateway.IClipperHackerClient;
 import com.autoclipper.si.app.mapper.setleadsmappers.SetLeadsDtoToEntityMapper;
 import com.autoclipper.si.app.service.interfaces.setleadsserviceinterface.ISaveSetLeadsService;
@@ -39,9 +39,9 @@ public class TsuruRestController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response processTsuruRequest(TsuruRequestDTO tsuruRequest) {
+        ClipperHackerResponseDTO responseDTO = clipperHackerClient.generateClipsFromUrl(tsuruRequest, apiKey);
         ESetLeadsRequest eSetLeadsRequest = mapper.dtoToEntity(tsuruRequest);
         ESetLeadsResponse createdSetLeads = saveSetLeadsService.saveSetLeads(eSetLeadsRequest);
-        ClipperHackerResponseDTO responseDTO = clipperHackerClient.generateClipsFromUrl(tsuruRequest, apiKey);
         return Response.ok(responseDTO).build();
     }
 }

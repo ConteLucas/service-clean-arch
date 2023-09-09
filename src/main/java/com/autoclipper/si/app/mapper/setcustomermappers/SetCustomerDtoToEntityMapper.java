@@ -1,17 +1,23 @@
 package com.autoclipper.si.app.mapper.setcustomermappers;
 
+import com.autoclipper.si.app.dto.client.MessageRequestDTO;
+import com.autoclipper.si.app.dto.client.old.TsuruRequestDTO;
 import com.autoclipper.si.app.dto.setcustomerclientdto.SetCustomerRequestDto;
 import com.autoclipper.si.app.dto.setcustomerclientdto.SetCustomerResponseDto;
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerRequest;
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerResponse;
+import com.autoclipper.si.domain.entities.setleadsentities.ESetLeadsRequest;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class SetCustomerDtoToEntityMapper {
+    //Change the DTO from Phone
+    public ESetCustomerRequest dtoToEntity(MessageRequestDTO dto) {
+        return ESetCustomerRequest.builder()
+                .customerPhone(dto.getPhoneNumber())
+                .customerName(dto.getCustomerId())
+                .build();
+    }
 
     public ESetCustomerRequest dtoToEntity(SetCustomerRequestDto dto) {
         if (dto == null) {
@@ -43,29 +49,6 @@ public class SetCustomerDtoToEntityMapper {
                 .customerAddress(dto.getCustomerAddress())
                 .customerCep(dto.getCustomerCep())
                 .build();
-    }
-
-    public SetCustomerResponseDto entityToDto(ESetCustomerResponse entity) {
-        if (entity == null) {
-            return null;
-        }
-        return SetCustomerResponseDto.builder()
-                .customerId(entity.getCustomerId())
-                .userId(entity.getUserId())
-                .leadId(entity.getLeadId())
-                .customerCpfCnpj(entity.getCustomerCpfCnpj())
-                .customerName(entity.getCustomerName())
-                .customerPhone(entity.getCustomerPhone())
-                .customerAddress(entity.getCustomerAddress())
-                .customerCep(entity.getCustomerCep())
-                .build();
-    }
-
-    public List<SetCustomerResponseDto> entityListToDtoList(List<ESetCustomerResponse> entityList) {
-        return entityList.stream()
-                .filter(Objects::nonNull)
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
     }
 
 }

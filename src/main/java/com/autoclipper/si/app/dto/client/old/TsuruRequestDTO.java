@@ -1,4 +1,4 @@
-package com.autoclipper.si.app.dto.client;
+package com.autoclipper.si.app.dto.client.old;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import lombok.AllArgsConstructor;

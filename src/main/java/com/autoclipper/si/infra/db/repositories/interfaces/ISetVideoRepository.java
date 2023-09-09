@@ -7,10 +7,6 @@ import java.util.List;
 
 public interface ISetVideoRepository extends PanacheRepositoryBase<SetVideo, Integer> {
     SetVideo save(SetVideo setVideo);
-
     List<SetVideo> getAll();
-
     void delete(Integer id);
-
-    SetVideo findById(Integer id);
 }

@@ -17,7 +17,6 @@ public class SetCustomerRequestDto {
     private String customerName;
     @NotNull
     private String customerPhone;
-
     private SetUser userId;
     private SetLeads leadId;
     private String customerCpfCnpj;

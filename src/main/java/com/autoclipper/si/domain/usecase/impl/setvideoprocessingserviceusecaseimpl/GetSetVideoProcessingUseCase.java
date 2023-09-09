@@ -23,4 +23,5 @@ public class GetSetVideoProcessingUseCase implements IGetSetVideoProcessingUseCa
     public ESetVideoProcessingResponse getSetVideoProcessingById(Integer id) {
         return iSetVideoProcessingGateway.getSetVideoProcessingById(id);
     }
+
 }

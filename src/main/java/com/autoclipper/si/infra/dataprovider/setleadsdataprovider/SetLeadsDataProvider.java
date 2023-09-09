@@ -30,8 +30,6 @@ public class SetLeadsDataProvider implements ISetLeadsGateway {
     @Override
     public List<ESetLeadsResponse> getAll() {
         List<SetLeads> all = iSetLeadsRepository.getAll();
-
-        // Mapeia a lista de SetLeads para uma lista de ESetLeadsResponse
         return setLeadsMapper.setListToESetListResponseList(all);
     }
 

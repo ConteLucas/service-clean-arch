@@ -16,7 +16,7 @@ public class UpdateSetCustomerUseCase implements IUpdateSetCustomerUseCase {
 
     @Override
     @Transactional
-    public ESetCustomerResponse updateSetCustomer(Integer id, ESetCustomerRequest eSetCustomerRequest) {
-        return iSetCustomerGateway.updateSetCustomer(id, eSetCustomerRequest);
+    public ESetCustomerResponse updateSetCustomerId(Integer id, ESetCustomerRequest eSetCustomerRequest) {
+        return iSetCustomerGateway.updateSetCustomerId(id, eSetCustomerRequest);
     }
 }

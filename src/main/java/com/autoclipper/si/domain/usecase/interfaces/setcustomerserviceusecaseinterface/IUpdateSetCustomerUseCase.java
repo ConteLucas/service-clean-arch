@@ -4,5 +4,5 @@ import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerReques
 import com.autoclipper.si.domain.entities.setcustomerentities.ESetCustomerResponse;
 
 public interface IUpdateSetCustomerUseCase {
-    ESetCustomerResponse updateSetCustomer(Integer id, ESetCustomerRequest eSetCustomerRequest);
+    ESetCustomerResponse updateSetCustomerId(Integer id, ESetCustomerRequest eSetCustomerRequest);
 }
